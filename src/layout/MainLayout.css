@@ -113,3 +113,67 @@
     padding: 16px;
   }
 }
+
+.employee-profile-container {
+  position: relative;
+}
+
+.employee-profile-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1px solid #e8e8ec;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 200px;
+  padding: 12px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.employee-dropdown-header {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8e8ec;
+}
+
+.employee-dropdown-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #202c4b;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.employee-dropdown-email {
+  font-size: 12px;
+  color: #7d8494;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 2px;
+}
+
+.employee-dropdown-logout-btn {
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  border-radius: 8px;
+  background: #fff5f5;
+  color: #e53e3e;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s;
+}
+
+.employee-dropdown-logout-btn:hover {
+  background: #fed7d7;
+}
