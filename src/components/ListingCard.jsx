@@ -11,7 +11,7 @@ const formatDate = (dateValue) => {
 };
 
 const ListingCard = ({ listing }) => {
-  const statusClass = listing.status === 'approved' ? 'approved' : 'pending';
+  const statusClass = ['approved', 'pending', 'cancelled', 'archived', 'on_hold'].includes(listing.status) ? listing.status : 'pending';
 
   return (
     <article className="employee-listing-card">

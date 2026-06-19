@@ -1,5 +1,5 @@
 .employee-dashboard {
-  max-width: 1011px;
+  max-width: 100%;
   margin: 0;
   display: grid;
   gap: 24px;
@@ -317,6 +317,21 @@
 .employee-listing-badge.pending {
   background: #fff2c7;
   color: #8c6700;
+}
+
+.employee-listing-badge.cancelled {
+  background: #fde8e8;
+  color: #c81e1e;
+}
+
+.employee-listing-badge.archived {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.employee-listing-badge.on_hold {
+  background: #e1effe;
+  color: #1e429f;
 }
 
 .employee-listing-date {

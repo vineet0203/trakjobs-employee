@@ -297,7 +297,7 @@ const Dashboard = () => {
   );
 
   const pendingListings = useMemo(
-    () => filteredListings.filter((item) => item.status === 'pending'),
+    () => filteredListings.filter((item) => item.status !== 'approved'),
     [filteredListings]
   );
 
