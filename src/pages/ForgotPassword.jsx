@@ -11,14 +11,8 @@ const ForgotPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
-    if (!email.trim()) {
-      setError('Email is required.');
-      return false;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      setError('Enter a valid email address.');
-      return false;
-    }
+    if (!email.trim()) { setError('Email is required.'); return false; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setError('Enter a valid email address.'); return false; }
     setError('');
     return true;
   };
@@ -27,15 +21,11 @@ const ForgotPassword = () => {
     event.preventDefault();
     setSuccess('');
     setError('');
-
     if (!validate()) return;
-
     setLoading(true);
     try {
       await api.post('/employee/forgot-password', { email: email.trim() }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
       });
       setSuccess('If an account exists with this email, you will receive a password reset link shortly.');
     } catch (err) {
@@ -48,26 +38,11 @@ const ForgotPassword = () => {
   return (
     <div className="employee-login-page">
       <div className="employee-login-card animate-fade-in-up">
-        <button
-          type="button"
-          className="employee-login-back-button"
-          onClick={() => navigate('/login')}
-        >
-          Back to Login
-        </button>
-
-        {/* TrakJobs Logo Branding */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.port === '5174' || window.location.port === '5175') {
-                window.location.href = `http://${window.location.hostname}:5173`;
-              } else {
-                window.location.href = '/';
-              }
-            }} 
+          
+            <a
+            href="https://trakjobs.com"
+            onClick={(e) => { e.preventDefault(); window.location.href = 'https://trakjobs.com'; }}
             style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
           >
             <div style={{ display: 'flex', height: '44px', width: '44px', alignItems: 'center', justifyContent: 'center', borderRadius: '12px', backgroundColor: '#fff3cd', color: '#0F2744' }}>
@@ -86,17 +61,14 @@ const ForgotPassword = () => {
             </div>
           </a>
         </div>
-
         <h1 className="employee-login-title">Forgot Password</h1>
-        <p className="employee-login-subtitle">Enter your email and we'll send you a password reset link.</p>
+        <p className="employee-login-subtitle">Enter your email and we will send you a password reset link.</p>
 
         {success ? <div className="employee-login-success">{success}</div> : null}
         {error ? <div className="employee-login-alert">{error}</div> : null}
 
         <form onSubmit={handleSubmit} className="employee-login-form" noValidate>
-          <label className="employee-login-label" htmlFor="email">
-            Email Address
-          </label>
+          <label className="employee-login-label" htmlFor="email">Email Address</label>
           <input
             id="email"
             type="email"
@@ -105,7 +77,6 @@ const ForgotPassword = () => {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
-
           <button type="submit" className="employee-login-button" disabled={loading}>
             {loading ? 'Sending...' : 'Send Reset Link'}
           </button>

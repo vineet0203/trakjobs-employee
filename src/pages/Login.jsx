@@ -23,26 +23,21 @@ const Login = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const authToken = params.get('authToken');
-
     if (!authToken) return;
-
     localStorage.setItem('employee_token', authToken);
     navigate('/time-tracking', { replace: true });
   }, [location.search, navigate]);
 
   const validate = () => {
     const nextErrors = {};
-
     if (!email.trim()) {
       nextErrors.email = 'Email is required.';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       nextErrors.email = 'Enter a valid email address.';
     }
-
     if (!password) {
       nextErrors.password = 'Password is required.';
     }
-
     setErrors(nextErrors);
     return Object.keys(nextErrors).length === 0;
   };
@@ -50,42 +45,24 @@ const Login = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setApiError('');
-
     if (!validate()) return;
-
     setLoading(true);
     try {
-      const payload = {
-        email: email.trim(),
-        password,
-      };
-
-      const response = await api.post('/employee/login', payload, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await api.post('/employee/login', { email: email.trim(), password }, {
+        headers: { 'Content-Type': 'application/json' },
       });
-
       const token = response?.data?.data?.token;
       const employee = response?.data?.data?.employee || {};
-
-      if (!token) {
-        throw new Error('Token not found in login response.');
-      }
-
+      if (!token) throw new Error('Token not found in login response.');
       localStorage.setItem('employee_token', token);
       localStorage.setItem('employee_auth_employee', JSON.stringify(employee));
-
       navigate('/dashboard', { replace: true });
     } catch (error) {
-      const message =
-        error?.response?.data?.message || error?.message || 'Employee login failed.';
-
+      const message = error?.response?.data?.message || error?.message || 'Employee login failed.';
       if (message === 'Please set your password first') {
         navigate(`/set-password?email=${encodeURIComponent(email)}`, { replace: true });
         return;
       }
-
       setApiError(message);
     } finally {
       setLoading(false);
@@ -95,32 +72,11 @@ const Login = () => {
   return (
     <div className="employee-login-page">
       <div className="employee-login-card animate-fade-in-up">
-        <button
-          type="button"
-          className="employee-login-back-button"
-          onClick={() => {
-            if (window.history.length > 1) {
-              navigate(-1);
-              return;
-            }
-            navigate('/', { replace: true });
-          }}
-        >
-          Back
-        </button>
-
-        {/* TrakJobs Logo Branding */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.port === '5174' || window.location.port === '5175') {
-                window.location.href = `http://${window.location.hostname}:5173`;
-              } else {
-                window.location.href = '/';
-              }
-            }} 
+          
+            <a
+            href="https://trakjobs.com"
+            onClick={(e) => { e.preventDefault(); window.location.href = 'https://trakjobs.com'; }}
             style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
           >
             <div style={{ display: 'flex', height: '44px', width: '44px', alignItems: 'center', justifyContent: 'center', borderRadius: '12px', backgroundColor: '#fff3cd', color: '#0F2744' }}>
@@ -139,7 +95,6 @@ const Login = () => {
             </div>
           </a>
         </div>
-
         <h1 className="employee-login-title">Employee Login</h1>
         <p className="employee-login-subtitle">Sign in to access your employee dashboard.</p>
 
@@ -147,9 +102,7 @@ const Login = () => {
         {apiError ? <div className="employee-login-alert">{apiError}</div> : null}
 
         <form onSubmit={handleSubmit} className="employee-login-form" noValidate>
-          <label className="employee-login-label" htmlFor="email">
-            Email
-          </label>
+          <label className="employee-login-label" htmlFor="email">Email</label>
           <input
             id="email"
             type="email"
@@ -161,9 +114,7 @@ const Login = () => {
           />
           {errors.email ? <span className="employee-login-error">{errors.email}</span> : null}
 
-          <label className="employee-login-label" htmlFor="password">
-            Password
-          </label>
+          <label className="employee-login-label" htmlFor="password">Password</label>
           <input
             id="password"
             type="password"
@@ -178,10 +129,7 @@ const Login = () => {
           <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '4px 0 8px' }}>
             <a
               href="/forgot-password"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate('/forgot-password');
-              }}
+              onClick={(e) => { e.preventDefault(); navigate('/forgot-password'); }}
               style={{ fontSize: '13px', color: '#3574bb', textDecoration: 'none', fontWeight: 500 }}
             >
               Forgot Password?

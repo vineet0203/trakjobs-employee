@@ -14,18 +14,9 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
-    if (!token) {
-      setError('Reset token is missing from the URL.');
-      return false;
-    }
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters long.');
-      return false;
-    }
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return false;
-    }
+    if (!token) { setError('Reset token is missing from the URL.'); return false; }
+    if (password.length < 8) { setError('Password must be at least 8 characters long.'); return false; }
+    if (password !== confirmPassword) { setError('Passwords do not match.'); return false; }
     setError('');
     return true;
   };
@@ -34,23 +25,14 @@ const ResetPassword = () => {
     event.preventDefault();
     setSuccess('');
     setError('');
-
     if (!validate()) return;
-
     setLoading(true);
     try {
-      await api.post('/employee/reset-password', {
-        token,
-        password,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      await api.post('/employee/reset-password', { token, password }, {
+        headers: { 'Content-Type': 'application/json' },
       });
       setSuccess('Your password has been reset successfully.');
-      setTimeout(() => {
-        navigate('/login', { replace: true });
-      }, 2000);
+      setTimeout(() => navigate('/login', { replace: true }), 2000);
     } catch (err) {
       setError(err?.response?.data?.message || err?.message || 'Failed to reset password.');
     } finally {
@@ -61,18 +43,11 @@ const ResetPassword = () => {
   return (
     <div className="employee-login-page">
       <div className="employee-login-card animate-fade-in-up">
-        {/* TrakJobs Logo Branding */}
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-          <a 
-            href="/" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (window.location.port === '5174' || window.location.port === '5175') {
-                window.location.href = `http://${window.location.hostname}:5173`;
-              } else {
-                window.location.href = '/';
-              }
-            }} 
+          
+            <a
+            href="https://trakjobs.com"
+            onClick={(e) => { e.preventDefault(); window.location.href = 'https://trakjobs.com'; }}
             style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
           >
             <div style={{ display: 'flex', height: '44px', width: '44px', alignItems: 'center', justifyContent: 'center', borderRadius: '12px', backgroundColor: '#fff3cd', color: '#0F2744' }}>
@@ -91,19 +66,15 @@ const ResetPassword = () => {
             </div>
           </a>
         </div>
-
         <h1 className="employee-login-title">Reset Password</h1>
         <p className="employee-login-subtitle">Enter a new secure password for your account.</p>
 
         {success ? <div className="employee-login-success">{success}</div> : null}
         {error ? <div className="employee-login-alert">{error}</div> : null}
-
         {!token && <div className="employee-login-alert">No reset token detected in the URL. Please verify the link.</div>}
 
         <form onSubmit={handleSubmit} className="employee-login-form" noValidate>
-          <label className="employee-login-label" htmlFor="password">
-            New Password
-          </label>
+          <label className="employee-login-label" htmlFor="password">New Password</label>
           <input
             id="password"
             type="password"
@@ -113,10 +84,7 @@ const ResetPassword = () => {
             onChange={(event) => setPassword(event.target.value)}
             disabled={!token || loading}
           />
-
-          <label className="employee-login-label" htmlFor="confirmPassword">
-            Confirm Password
-          </label>
+          <label className="employee-login-label" htmlFor="confirmPassword">Confirm Password</label>
           <input
             id="confirmPassword"
             type="password"
@@ -126,7 +94,6 @@ const ResetPassword = () => {
             onChange={(event) => setConfirmPassword(event.target.value)}
             disabled={!token || loading}
           />
-
           <button type="submit" className="employee-login-button" disabled={!token || loading}>
             {loading ? 'Resetting...' : 'Reset Password'}
           </button>
