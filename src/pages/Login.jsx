@@ -94,7 +94,12 @@ const Login = () => {
 
   return (
     <div className="employee-login-page">
-      <div className="employee-login-card">
+      <div className="aurora-bg">
+        <div className="aurora-blob aurora-blob-1"></div>
+        <div className="aurora-blob aurora-blob-2"></div>
+        <div className="aurora-blob aurora-blob-3"></div>
+      </div>
+      <div className="employee-login-card animate-fade-in-up">
         <button
           type="button"
           className="employee-login-back-button"
@@ -174,6 +179,19 @@ const Login = () => {
             onBlur={validate}
           />
           {errors.password ? <span className="employee-login-error">{errors.password}</span> : null}
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', margin: '4px 0 8px' }}>
+            <a
+              href="/forgot-password"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate('/forgot-password');
+              }}
+              style={{ fontSize: '13px', color: '#3574bb', textDecoration: 'none', fontWeight: 500 }}
+            >
+              Forgot Password?
+            </a>
+          </div>
 
           <button type="submit" className="employee-login-button" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}

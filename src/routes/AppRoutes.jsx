@@ -4,6 +4,8 @@ import Login from '../pages/Login';
 import ListingsPage from '../pages/ListingsPage';
 import SetPassword from '../pages/SetPassword';
 import TimeTracking from '../pages/TimeTracking';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('employee_token');
@@ -20,6 +22,8 @@ const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/employee-login" element={<Login />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/set-password" element={<SetPassword />} />
 
       <Route

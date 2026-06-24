@@ -71,7 +71,12 @@ const SetPassword = () => {
 
   return (
     <div className="employee-set-password-page">
-      <div className="employee-set-password-card">
+      <div className="aurora-bg">
+        <div className="aurora-blob aurora-blob-1"></div>
+        <div className="aurora-blob aurora-blob-2"></div>
+        <div className="aurora-blob aurora-blob-3"></div>
+      </div>
+      <div className="employee-set-password-card animate-fade-in-up">
         <h1 className="employee-set-password-title">Set Your Password</h1>
         <p className="employee-set-password-subtitle">
           Create a password for your employee account.
