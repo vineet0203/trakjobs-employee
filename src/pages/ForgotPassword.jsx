@@ -32,7 +32,7 @@ const ForgotPassword = () => {
 
     setLoading(true);
     try {
-      await api.post('/api/v1/employee/forgot-password', { email: email.trim() }, {
+      await api.post('/employee/forgot-password', { email: email.trim() }, {
         headers: {
           'Content-Type': 'application/json',
         },
