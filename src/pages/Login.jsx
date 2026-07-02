@@ -23,8 +23,14 @@ const Login = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const authToken = params.get('authToken');
+    const verifiedParam = params.get('verified');
     if (!authToken) return;
     localStorage.setItem('employee_token', authToken);
+    if (verifiedParam === 'true') {
+      const employee = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
+      employee.verification_status = 'verified';
+      localStorage.setItem('employee_auth_employee', JSON.stringify(employee));
+    }
     navigate('/time-tracking', { replace: true });
   }, [location.search, navigate]);
 
@@ -56,6 +62,13 @@ const Login = () => {
       if (!token) throw new Error('Token not found in login response.');
       localStorage.setItem('employee_token', token);
       localStorage.setItem('employee_auth_employee', JSON.stringify(employee));
+      
+      if (employee && employee.verification_status !== 'verified') {
+        const vendorAppUrl = import.meta.env.VITE_VENDOR_APP_URL || 'http://localhost:5173';
+        window.location.href = `${vendorAppUrl}/verification?authToken=${token}&role=Employee`;
+        return;
+      }
+
       navigate('/dashboard', { replace: true });
     } catch (error) {
       const message = error?.response?.data?.message || error?.message || 'Employee login failed.';

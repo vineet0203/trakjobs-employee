@@ -75,7 +75,32 @@ const MainLayout = () => {
                 onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
                 <span className="employee-profile-avatar">{initials}</span>
-                <span className="employee-profile-name">{displayName}</span>
+                <span className="employee-profile-name" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                  {displayName}
+                  {employee?.verification_status === 'verified' ? (
+                    <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5" style={{ width: '14px', height: '14px', color: '#22c55e', flexShrink: 0 }}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  ) : (
+                    <svg 
+                      style={{ width: '14px', height: '14px', color: '#f59e0b', cursor: 'pointer', flexShrink: 0 }}
+                      className="animate-pulse"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const token = localStorage.getItem('employee_token');
+                        const vendorAppUrl = import.meta.env.VITE_VENDOR_APP_URL || 'http://localhost:5173';
+                        window.location.href = `${vendorAppUrl}/verification?authToken=${token}&role=Employee`;
+                      }}
+                      fill="none" 
+                      viewBox="0 0 24 24" 
+                      stroke="currentColor" 
+                      strokeWidth="2"
+                      title="Account verification required. Click to verify."
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                  )}
+                </span>
               </button>
 
               {isDropdownOpen && (

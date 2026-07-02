@@ -14,6 +14,13 @@ const ProtectedRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
+  const employee = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
+  if (employee && employee.verification_status !== 'verified') {
+    const vendorAppUrl = import.meta.env.VITE_VENDOR_APP_URL || 'http://localhost:5173';
+    window.location.href = `${vendorAppUrl}/verification?authToken=${token}&role=Employee`;
+    return null;
+  }
+
   return children;
 };
 
