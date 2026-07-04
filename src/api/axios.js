@@ -35,8 +35,7 @@ api.interceptors.response.use(
         employee.verification_status = 'pending';
         localStorage.setItem('employee_auth_employee', JSON.stringify(employee));
 
-        const vendorAppUrl = import.meta.env.VITE_VENDOR_APP_URL || 'http://localhost:5173';
-        window.location.href = `${vendorAppUrl}/verification?authToken=${token}&role=Employee`;
+        window.location.href = `/verification?authToken=${token}`;
       }
     }
     return Promise.reject(error);

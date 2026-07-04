@@ -7,6 +7,8 @@ import TimeTracking from '../pages/TimeTracking';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 
+import VerificationPage from '../pages/VerificationPage';
+
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('employee_token');
 
@@ -16,9 +18,7 @@ const ProtectedRoute = ({ children }) => {
 
   const employee = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
   if (employee && employee.verification_status !== 'verified') {
-    const vendorAppUrl = import.meta.env.VITE_VENDOR_APP_URL || 'http://localhost:5173';
-    window.location.href = `${vendorAppUrl}/verification?authToken=${token}&role=Employee`;
-    return null;
+    return <Navigate to="/verification" replace />;
   }
 
   return children;
@@ -32,6 +32,7 @@ const AppRoutes = () => {
       <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/set-password" element={<SetPassword />} />
+      <Route path="/verification" element={<VerificationPage />} />
 
       <Route
         path="/"
