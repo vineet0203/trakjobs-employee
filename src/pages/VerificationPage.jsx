@@ -121,26 +121,24 @@ export default function VerificationPage() {
         const meData = meRes.data?.data || meRes.data;
         setUser(meData);
 
-        const cachedEmployee = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
-        
-        // Always prefill from cached profile first
-        const emailVal = cachedEmployee?.email || '';
+        // Always prefill from fresh profile first
+        const emailVal = meData?.email || '';
         setEmailInput(emailVal);
         if (emailVal) {
           setEmailReadOnly(true);
         }
 
-        const phoneVal = cachedEmployee?.phone || cachedEmployee?.mobile_number || '';
+        const phoneVal = meData?.phone || meData?.mobile_number || '';
         setPhoneInput(phoneVal);
         if (phoneVal) {
           setPhoneReadOnly(true);
         }
 
-        if (cachedEmployee?.first_name) {
-          setFirstName(cachedEmployee.first_name);
+        if (meData?.first_name) {
+          setFirstName(meData.first_name);
         }
-        if (cachedEmployee?.last_name) {
-          setLastName(cachedEmployee.last_name);
+        if (meData?.last_name) {
+          setLastName(meData.last_name);
         }
         
         // Load progress
