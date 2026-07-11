@@ -8,6 +8,7 @@ import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
 
 import VerificationPage from '../pages/VerificationPage';
+import VerificationRequired from '../pages/VerificationRequired';
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem('employee_token');
@@ -18,7 +19,7 @@ const ProtectedRoute = ({ children }) => {
 
   const employee = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
   if (employee && employee.verification_status !== 'verified') {
-    return <Navigate to="/verification" replace />;
+    return <Navigate to="/verification-required" replace />;
   }
 
   return children;
@@ -33,6 +34,7 @@ const AppRoutes = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/set-password" element={<SetPassword />} />
       <Route path="/verification" element={<VerificationPage />} />
+      <Route path="/verification-required" element={<VerificationRequired />} />
 
       <Route
         path="/"

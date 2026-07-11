@@ -121,18 +121,17 @@ export default function VerificationPage() {
         const meData = meRes.data?.data || meRes.data;
         setUser(meData);
 
+        // Sync profile to localStorage
+        const cachedEmployee = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
+        const updatedEmployee = { ...cachedEmployee, ...meData };
+        localStorage.setItem('employee_auth_employee', JSON.stringify(updatedEmployee));
+
         // Always prefill from fresh profile first
         const emailVal = meData?.email || '';
         setEmailInput(emailVal);
-        if (emailVal) {
-          setEmailReadOnly(true);
-        }
 
         const phoneVal = meData?.phone || meData?.mobile_number || '';
         setPhoneInput(phoneVal);
-        if (phoneVal) {
-          setPhoneReadOnly(true);
-        }
 
         if (meData?.first_name) {
           setFirstName(meData.first_name);
@@ -152,11 +151,9 @@ export default function VerificationPage() {
           if (vData.gender) setGender(vData.gender);
           if (vData.email) {
             setEmailInput(vData.email);
-            setEmailReadOnly(true);
           }
           if (vData.phone) {
             setPhoneInput(vData.phone);
-            setPhoneReadOnly(true);
           }
           
           if (progressData.document_type) {
@@ -167,9 +164,10 @@ export default function VerificationPage() {
           }
           
           // Check if already verified
-          if (progressData.status === 'verified' || cachedEmployee.verification_status === 'verified') {
-            cachedEmployee.verification_status = 'verified';
-            localStorage.setItem('employee_auth_employee', JSON.stringify(cachedEmployee));
+          if (progressData.status === 'verified' || meData.verification_status === 'verified') {
+            const employeeToSave = JSON.parse(localStorage.getItem('employee_auth_employee') || '{}');
+            employeeToSave.verification_status = 'verified';
+            localStorage.setItem('employee_auth_employee', JSON.stringify(employeeToSave));
             navigate('/time-tracking', { replace: true });
             return;
           }

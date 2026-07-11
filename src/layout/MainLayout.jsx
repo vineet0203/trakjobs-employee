@@ -87,9 +87,7 @@ const MainLayout = () => {
                       className="animate-pulse"
                       onClick={(e) => {
                         e.stopPropagation();
-                        const token = localStorage.getItem('employee_token');
-                        const vendorAppUrl = import.meta.env.VITE_VENDOR_APP_URL || 'http://localhost:5173';
-                        window.location.href = `${vendorAppUrl}/verification?authToken=${token}&role=Employee`;
+                        navigate('/verification');
                       }}
                       fill="none" 
                       viewBox="0 0 24 24" 
