@@ -13,6 +13,9 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
+  const homepageUrl = import.meta.env.DEV
+    ? `${window.location.protocol}//${window.location.hostname}:5173`
+    : 'https://trakjobs.com';
 
   useEffect(() => {
     if (searchParams.get('passwordSet') === '1') {
@@ -87,8 +90,7 @@ const Login = () => {
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
           
             <a
-            href="https://trakjobs.com"
-            onClick={(e) => { e.preventDefault(); window.location.href = 'https://trakjobs.com'; }}
+            href={homepageUrl}
             style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }}
           >
             <div style={{ display: 'flex', height: '44px', width: '44px', alignItems: 'center', justifyContent: 'center', borderRadius: '12px', backgroundColor: '#fff3cd', color: '#0F2744' }}>
